@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>index</title>
+</head>
+<body>
+  <div id="content"></div>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search)
+    const accessToken = urlParams.get('accessToken')
+    const refreshToken = urlParams.get('refreshToken')
+    console.log(accessToken)
+    if (accessToken && refreshToken) {
+      localStorage.setItem('accessToken', accessToken)
+      localStorage.setItem('refreshToken', refreshToken)
+      window.history.pushState({}, document.title, window.location.pathname);
+    }
+    console.log(localStorage.getItem('accessToken'))
+
+    axios.get('http://127.0.0.1:3001/info', {
+      headers: {
+        authorazition: 'Bearer ' + localStorage.getItem('accessToken')
+      }
+    })
+      .then(res => {
+        const user = res.data.user
+        console.log(user)
+        const content = document.getElementById('content')
+        content.innerText = 'Wellcome to ' + user.username
+      }).catch(err => {
+        window.location.href = 'http://localhost:3000/login.html?callback=http://127.0.0.1:3001/index.html'
+      })
+    
+  </script>
+</body>
+</html>

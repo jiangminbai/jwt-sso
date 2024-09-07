@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>login</title>
+</head>
+<body>
+  <div class="login">
+    <label for="">用户名： <input type="text" id="username"></label>
+    <label for="">密码： <input type="text" id="password"></label>
+    <button id="login">注册</button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const login = document.getElementById('login')
+    const username = document.getElementById('username')
+    const password = document.getElementById('password')
+    login.onclick = function () {
+      axios.post('http://localhost:3000/registry', {
+        username: username.value,
+        password: password.value
+      })
+      .then(res => {
+        window.location.href = 'http://localhost:3000/login.html'
+      })
+    }
+  </script>
+</body>
+</html>

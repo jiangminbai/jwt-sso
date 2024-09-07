@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>login</title>
+</head>
+<body>
+  <div class="login">
+    <label for="">用户名： <input type="text" id="username"></label>
+    <label for="">密码： <input type="text" id="password"></label>
+    <button id="login">登录</button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const login = document.getElementById('login')
+    const username = document.getElementById('username')
+    const password = document.getElementById('password')
+    const search = window.location.search.split('callback=')[1]
+    login.onclick = function () {
+      axios.post('http://localhost:3000/login', {
+        username: username.value,
+        password: password.value
+      })
+      .then(res => {
+        const accessToken = res.accessToken
+        const refreshToken = res.refreshToken
+        window.location.href = search + '?accessToken=' + accessToken + '&refreshToken=' + refreshToken
+      })
+    }
+    axios.post('/loginStatus')
+      .then(res => {
+        const data = res.data
+        const accessToken = data.accessToken
+        const refreshToken = data.refreshToken
+        window.location.href = search + '?accessToken=' + accessToken + '&refreshToken=' + refreshToken
+      })
+  </script>
+</body>
+</html>
