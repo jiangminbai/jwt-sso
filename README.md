@@ -16,7 +16,7 @@ server-center 运行在http://localhost:3000上；server-app1 运行在http://12
 5. app1(client) --> 携带access token--http request--> app1(server)
 6. app1(server) --验证access token的有效性--有效--http response--> app1(client)
 
-#### access token 失效流程
+#### 已登录，但app1的access token 失效的流程
 
 1. app1(client) --携带access token--http request-->app1(server) 验证access token有效性
 2. app1(server) -- access token 无效--http response(403)-->app1(client)
